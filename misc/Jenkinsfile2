@@ -1,0 +1,18 @@
+node {
+
+    // Job stages
+
+    stage 'Prepare Docker Image'
+    String DOCKER_REPO = "homebuying"
+    String PROJ_VER = "0.0.1"
+    String IMAGE = "android-builder"
+
+    git url: 'ssh://git@github.com:marshell08/docker-demo.git', branch: 'master'
+    
+
+    sh "docker build -t=af.cds.bns:5002/$DOCKER_REPO/$IMAGE:${PROJ_VER}-b${BUILD_NUMBER}-dev ."
+    sh "docker push af.cds.bns:5002/$DOCKER_REPO/$IMAGE:${PROJ_VER}-b${BUILD_NUMBER}-dev"
+    sh "docker rmi af.cds.bns:5002/$DOCKER_REPO/$IMAGE:${PROJ_VER}-b${BUILD_NUMBER}-dev"
+
+
+}
